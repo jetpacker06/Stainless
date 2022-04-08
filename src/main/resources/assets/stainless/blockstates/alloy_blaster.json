@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "stainless:block/alloy_blaster",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "stainless:block/alloy_blaster"
+    },
+    "facing=south": {
+      "model": "stainless:block/alloy_blaster",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "stainless:block/alloy_blaster",
+      "y": 270
+    }
+  }
+}

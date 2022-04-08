@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "stainless:block/ab0",
+    "north": "stainless:block/ab0",
+    "south": "stainless:block/ab1",
+    "east": "stainless:block/ab2",
+    "west": "stainless:block/ab3",
+    "up": "stainless:block/ab4",
+    "down": "stainless:block/ab5"
+  }
+}
