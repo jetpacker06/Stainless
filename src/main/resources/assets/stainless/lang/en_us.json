@@ -4,6 +4,11 @@
 
   "item.stainless.steel_ingot": "Steel Ingot",
   "item.stainless.steel_nugget": "Steel Nugget",
+  "item.stainless.steel_sword": "Steel Sword",
+  "item.stainless.steel_hoe": "Steel Hoe",
+  "item.stainless.steel_axe": "Steel Axe",
+  "item.stainless.steel_pickaxe": "Steel Pickaxe",
+  "item.stainless.steel_shovel": "Steel Shovel",
 
   "itemGroup.Stainless Items": "Stainless"
 }
