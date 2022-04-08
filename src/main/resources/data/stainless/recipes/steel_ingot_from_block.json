@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "stainless:steel_block"
+    }
+  },
+  "result": {
+    "item": "stainless:steel_ingot",
+    "count": 9
+  }
+}
