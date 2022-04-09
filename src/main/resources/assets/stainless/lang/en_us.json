@@ -10,5 +10,6 @@
   "item.stainless.steel_pickaxe": "Steel Pickaxe",
   "item.stainless.steel_shovel": "Steel Shovel",
 
-  "itemGroup.Stainless Items": "Stainless"
+  "itemGroup.Stainless Items": "Stainless",
+  "alloy_blaster_display_name": "Alloy Blaster"
 }
