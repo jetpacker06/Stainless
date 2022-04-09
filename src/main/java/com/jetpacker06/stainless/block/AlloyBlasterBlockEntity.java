@@ -221,7 +221,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
         return inventory.getItem(3).getItem() == output.getItem() || inventory.getItem(3).isEmpty();
     }
 
-    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
+    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, int output_count) {
         return inventory.getItem(3).getMaxStackSize() > inventory.getItem(3).getCount();
     }
 }
