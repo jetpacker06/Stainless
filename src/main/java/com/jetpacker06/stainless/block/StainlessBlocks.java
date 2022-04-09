@@ -6,7 +6,8 @@ import com.jetpacker06.stainless.item.StainlessItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -24,7 +25,6 @@ public class StainlessBlocks {
     public static final RegistryObject<Block>
         STEEL_BLOCK = metal_block("steel_block"),
         ALLOY_BLASTER = registerBlock("alloy_blaster", () -> new AlloyBlasterBlock(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(6).explosionResistance(9).requiresCorrectToolForDrops()), ItemGroups.STAINLESS);
-
 
     //end blocks
     public static final RegistryObject<Block> metal_block(String name) {

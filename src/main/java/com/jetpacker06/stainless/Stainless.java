@@ -1,7 +1,9 @@
 package com.jetpacker06.stainless;
 
+import com.jetpacker06.stainless.block.StainlessBlockEntities;
 import com.jetpacker06.stainless.block.StainlessBlocks;
 import com.jetpacker06.stainless.item.StainlessItems;
+import com.jetpacker06.stainless.screen.MenuTypes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,7 +22,8 @@ public class Stainless {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         StainlessItems.register(eventBus);
         StainlessBlocks.register(eventBus);
-
+        StainlessBlockEntities.register(eventBus);
+        MenuTypes.register(eventBus);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
     }
