@@ -1,0 +1,17 @@
+{
+  "type": "stainless:alloy_blasting",
+  "ingredients": [
+    {
+      "item": "create:raw_zinc"
+    },
+    {
+      "item": "minecraft:raw_copper"
+    }
+  ],
+  "ingredient1count": 1,
+  "ingredient2count": 1,
+  "output": {
+    "item": "create:brass_ingot"
+  },
+  "count": 2
+}

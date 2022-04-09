@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X#X",
+    "XXX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:blast_furnace"
+    },
+    "X": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "stainless:alloy_blaster"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "stainless:alloy_blasting",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_scrap"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "ingredient1count": 3,
+  "ingredient2count": 3,
+  "output": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "count": 1
+}
