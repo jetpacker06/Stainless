@@ -1,0 +1,14 @@
+{
+  "type": "stainless:alloy_blasting",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "output": {
+    "item": "stainless:steel_ingot"
+  }
+}

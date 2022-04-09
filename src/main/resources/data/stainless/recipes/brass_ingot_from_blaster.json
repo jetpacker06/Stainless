@@ -1,0 +1,14 @@
+{
+  "type": "stainless:alloy_blasting",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/copper"
+    },
+    {
+      "tag": "forge:ingots/zinc"
+    }
+  ],
+  "output": {
+    "tag": "forge:ingots/brass"
+  }
+}
