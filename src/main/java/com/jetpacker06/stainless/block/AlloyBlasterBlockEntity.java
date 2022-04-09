@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.crafting.conditions.TrueCondition;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -193,6 +194,10 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
                 inventory.getItem(3).getMaxStackSize() >= inventory.getItem(3).getCount() + match.get().getOutputCount() //can the amount of the item fit?
                 &&
                 (inventory.getItem(3).getItem() == match.get().getResultItem().getItem() || inventory.getItem(3).isEmpty()) // does the result item match the item sitting in the output? OR is the output empty?
+                &&
+                entity.itemHandler.getStackInSlot(1).getCount() >= match.get().getIng1count() // does slot 1 contain enough items?
+                &&
+                entity.itemHandler.getStackInSlot(2).getCount() >= match.get().getIng2count() // does slot 2 contain enough items?
                 ;
     }
 
@@ -207,13 +212,15 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
                 .getRecipeFor(AlloyBlasterRecipe.Type.INSTANCE, inventory, level);
 
         if(match.isPresent()) {
-            entity.itemHandler.extractItem(1,1, false);
-            entity.itemHandler.extractItem(2,1, false);
+           // if (entity.itemHandler.getStackInSlot(1).getCount() >= match.get().getIng1count() && entity.itemHandler.getStackInSlot(2).getCount() >= match.get().getIng2count()) {
+                entity.itemHandler.extractItem(1, match.get().getIng1count(), false);
+                entity.itemHandler.extractItem(2, match.get().getIng2count(), false);
 
-            entity.itemHandler.setStackInSlot(3, new ItemStack(match.get().getResultItem().getItem(),
-                    entity.itemHandler.getStackInSlot(3).getCount() + match.get().getOutputCount()));
+                entity.itemHandler.setStackInSlot(3, new ItemStack(match.get().getResultItem().getItem(),
+                        entity.itemHandler.getStackInSlot(3).getCount() + match.get().getOutputCount()));
 
-            entity.resetProgress();
+                entity.resetProgress();
+         //   }
         }
     }
 

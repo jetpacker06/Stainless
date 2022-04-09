@@ -8,8 +8,10 @@
       "item": "minecraft:coal"
     }
   ],
+  "ingredient1count": 3,
+  "ingredient2count": 2,
   "output": {
     "item": "stainless:steel_ingot"
   },
-  "count": 16
+  "count": 3
 }
