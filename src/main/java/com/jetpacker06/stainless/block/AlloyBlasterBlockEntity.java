@@ -187,9 +187,13 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
 
         Optional<AlloyBlasterRecipe> match = level.getRecipeManager()
                 .getRecipeFor(AlloyBlasterRecipe.Type.INSTANCE, inventory, level);
-
-        return match.isPresent() && canInsertAmountIntoOutputSlot(inventory)
-                && canInsertItemIntoOutputSlot(inventory, match.get().getResultItem());
+        return
+                match.isPresent() //is there even a recipe at all?
+                &&
+                inventory.getItem(3).getMaxStackSize() >= inventory.getItem(3).getCount() + match.get().getOutputCount() //can the amount of the item fit?
+                &&
+                (inventory.getItem(3).getItem() == match.get().getResultItem().getItem() || inventory.getItem(3).isEmpty()) // does the result item match the item sitting in the output? OR is the output empty?
+                ;
     }
 
     private static void craftItem(AlloyBlasterBlockEntity entity) {
@@ -207,7 +211,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
             entity.itemHandler.extractItem(2,1, false);
 
             entity.itemHandler.setStackInSlot(3, new ItemStack(match.get().getResultItem().getItem(),
-                    entity.itemHandler.getStackInSlot(3).getCount() + 1));
+                    entity.itemHandler.getStackInSlot(3).getCount() + match.get().getOutputCount()));
 
             entity.resetProgress();
         }
@@ -217,11 +221,4 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
         this.progress = 0;
     }
 
-    private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack output) {
-        return inventory.getItem(3).getItem() == output.getItem() || inventory.getItem(3).isEmpty();
-    }
-
-    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, int output_count) {
-        return inventory.getItem(3).getMaxStackSize() > inventory.getItem(3).getCount();
-    }
 }
