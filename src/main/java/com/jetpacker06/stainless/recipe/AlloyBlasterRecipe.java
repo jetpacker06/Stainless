@@ -17,13 +17,15 @@ import javax.annotation.Nullable;
 public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
+    private final int outputCount;
     private final NonNullList<Ingredient> recipeItems;
 
 
-    public AlloyBlasterRecipe(ResourceLocation id, ItemStack output,
+    public AlloyBlasterRecipe(ResourceLocation id, ItemStack output, int outputCount,
                               NonNullList<Ingredient> recipeItems) {
         this.id = id;
         this.output = output;
+        this.outputCount = outputCount;
         this.recipeItems = recipeItems;
     }
 
@@ -50,7 +52,9 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
     public ItemStack getResultItem() {
         return output.copy();
     }
-
+    public int getOutputCount() {
+        return outputCount;
+    }
     @Override
     public ResourceLocation getId() {
         return id;
@@ -79,7 +83,7 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
         @Override
         public AlloyBlasterRecipe fromJson(ResourceLocation id, JsonObject json) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-
+            int outputCount = GsonHelper.getAsInt(json, "count");
             JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY);
 
@@ -87,7 +91,7 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new AlloyBlasterRecipe(id, output, inputs);
+            return new AlloyBlasterRecipe(id, output, outputCount, inputs);
         }
 
         @Override
@@ -99,7 +103,8 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
             }
 
             ItemStack output = buf.readItem();
-            return new AlloyBlasterRecipe(id, output, inputs);
+            int outputCount = buf.readInt();
+            return new AlloyBlasterRecipe(id, output, outputCount, inputs);
         }
 
         @Override
@@ -109,6 +114,7 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
                 ing.toNetwork(buf);
             }
             buf.writeItemStack(recipe.getResultItem(), false);
+            buf.writeInt(recipe.getOutputCount());
         }
 
         @Override
