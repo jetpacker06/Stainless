@@ -19,16 +19,22 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
     private final ItemStack output;
     private final int outputCount;
     private final NonNullList<Ingredient> recipeItems;
+    private final int ing1count;
+    private final int ing2count;
+    //private final int ing3count;
+
 
 
     public AlloyBlasterRecipe(ResourceLocation id, ItemStack output, int outputCount,
-                              NonNullList<Ingredient> recipeItems) {
+                              NonNullList<Ingredient> recipeItems, int ing1count, int ing2count/*, int ing3count*/) {
         this.id = id;
         this.output = output;
         this.outputCount = outputCount;
         this.recipeItems = recipeItems;
+        this.ing1count =  ing1count;
+        this.ing2count =  ing2count;
+        //this.ing3count =  ing3count;
     }
-
     @Override
     public boolean matches(SimpleContainer pContainer, net.minecraft.world.level.Level pLevel) {
         if(recipeItems.get(0).test(pContainer.getItem(1))) {
@@ -55,6 +61,15 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
     public int getOutputCount() {
         return outputCount;
     }
+    public int getIng1count() {
+        return ing1count;
+    }
+    public int getIng2count() {
+        return ing2count;
+    }
+    //public int getIng3count() {
+    //    return ing3count;
+    //}
     @Override
     public ResourceLocation getId() {
         return id;
@@ -75,36 +90,43 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "alloy_blasting";
     }
-
     public static class Serializer implements RecipeSerializer<AlloyBlasterRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(Stainless.MOD_ID,"alloy_blasting");
 
         @Override
         public AlloyBlasterRecipe fromJson(ResourceLocation id, JsonObject json) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            int outputCount = GsonHelper.getAsInt(json, "count");
             JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY);
-
-            for (int i = 0; i < inputs.size(); i++) {
+            NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY);
+            for (int i = 0; i < ingredients.size();i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
+            int ing1count = GsonHelper.getAsInt(json, "ingredient1count");
+            int ing2count = GsonHelper.getAsInt(json, "ingredient2count");
+            //int ing3count = GsonHelper.getAsInt(json, "ingredient3count");
+            //inputs.set(2, Ingredient.fromJson(ingredients.get(2)));
+            int outputCount = GsonHelper.getAsInt(json, "count");
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
 
-            return new AlloyBlasterRecipe(id, output, outputCount, inputs);
+            return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count/*, ing3count*/);
         }
 
         @Override
         public AlloyBlasterRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
-
+            int ing1count = buf.readInt();
+            //if (inputs.size() > 1) {
+                int ing2count = buf.readInt();
+            //}
+            if (inputs.size() > 2) {
+                int ing3count = buf.readInt();
+            }
             ItemStack output = buf.readItem();
             int outputCount = buf.readInt();
-            return new AlloyBlasterRecipe(id, output, outputCount, inputs);
+            return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count/*, ing3count*/);
         }
 
         @Override
@@ -113,6 +135,14 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);
             }
+            buf.writeInt(recipe.getIng1count());
+            if (recipe.getIngredients().size() > 1) {
+                buf.writeInt(recipe.getIng2count());
+            }
+            if (recipe.getIngredients().size() > 2) {
+                //buf.writeInt(recipe.getIng3count());
+            }
+            //buf.writeInt(recipe.getIng3count());
             buf.writeItemStack(recipe.getResultItem(), false);
             buf.writeInt(recipe.getOutputCount());
         }
