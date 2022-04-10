@@ -17,8 +17,7 @@ public class MenuTypes {
     public static final RegistryObject<MenuType<AlloyBlasterMenu>> ALLOY_BLASTER_MENU =
             registerMenuType(AlloyBlasterMenu::new, "alloy_blaster_menu");
 
-    private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,
-                                                                                                  String name) {
+    private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,                                                                                               String name) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }
 
