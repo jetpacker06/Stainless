@@ -33,7 +33,7 @@ public class AlloyBlasterScreen extends AbstractContainerScreen<AlloyBlasterMenu
         this.blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
 
         if(menu.isCrafting()) {
-            blit(pPoseStack, x + 84, y + 22, 176, 14, menu.getScaledProgress(), 36);
+            blit(pPoseStack, x + 104, y + 22, 176, 14, menu.getScaledProgress(), 36);
         }
 
         if(menu.hasFuel()) {

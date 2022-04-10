@@ -34,10 +34,10 @@ public class AlloyBlasterMenu extends AbstractContainerMenu {
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
             this.addSlot(new ModFuelSlot(handler, 0, 18, 50));
-            this.addSlot(new SlotItemHandler(handler, 1, 66, 11));
-            this.addSlot(new SlotItemHandler(handler, 2, 66, 33));
-            this.addSlot(new SlotItemHandler(handler, 3, 66, 55));
-            this.addSlot(new ModResultSlot(handler, 4, 114, 33));
+            this.addSlot(new SlotItemHandler(handler, 1, 86, 11));
+            this.addSlot(new SlotItemHandler(handler, 2, 86, 33));
+            this.addSlot(new SlotItemHandler(handler, 3, 86, 55));
+            this.addSlot(new ModResultSlot(handler, 4, 134, 33));
         });
         addDataSlots(data);
     }

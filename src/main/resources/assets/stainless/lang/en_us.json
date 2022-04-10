@@ -11,5 +11,6 @@
   "item.stainless.steel_shovel": "Steel Shovel",
 
   "itemGroup.Stainless Items": "Stainless",
-  "alloy_blaster_display_name": "Alloy Blaster"
+  "alloy_blaster_display_name": "Alloy Blaster",
+  "steel_ingot_tooltip": "Forged by inserting Raw Iron or Iron Ingots into the first slot of an Alloy Blaster, and Coal into the second slot."
 }
