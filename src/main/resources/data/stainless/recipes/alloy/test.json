@@ -3,13 +3,10 @@
   "ingredients": [
     {
       "tag": "forge:ingots/iron"
-    },
-    {
-      "item": "minecraft:coal"
     }
   ],
   "ingredient1count": 2,
-  "ingredient2count": 1,
+  "ingredient2count": 0,
   "output": {
     "item": "stainless:steel_ingot"
   },

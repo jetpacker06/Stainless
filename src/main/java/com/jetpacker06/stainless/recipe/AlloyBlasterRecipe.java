@@ -105,7 +105,7 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
             int ing2count = GsonHelper.getAsInt(json, "ingredient2count");
             //int ing3count = GsonHelper.getAsInt(json, "ingredient3count");
             //inputs.set(2, Ingredient.fromJson(ingredients.get(2)));
-            int outputCount = GsonHelper.getAsInt(json, "count");
+            int outputCount = GsonHelper.getAsInt(json, "outputcount");
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
 
             return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count/*, ing3count*/);
