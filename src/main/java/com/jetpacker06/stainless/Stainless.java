@@ -2,7 +2,6 @@ package com.jetpacker06.stainless;
 
 import com.jetpacker06.stainless.block.StainlessBlockEntities;
 import com.jetpacker06.stainless.block.StainlessBlocks;
-import com.jetpacker06.stainless.config.StainlessConfigs;
 import com.jetpacker06.stainless.item.StainlessItems;
 import com.jetpacker06.stainless.recipe.RecipeTypes;
 import com.jetpacker06.stainless.screen.AlloyBlasterScreen;
@@ -32,7 +31,6 @@ public class Stainless {
         RecipeTypes.register(eventBus);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, StainlessConfigs.SPEC, "stainless-server.toml");
     }
     private void clientSetup(final FMLCommonSetupEvent event) {
         MenuScreens.register(MenuTypes.ALLOY_BLASTER_MENU.get(), AlloyBlasterScreen::new);
