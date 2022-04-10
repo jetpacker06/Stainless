@@ -10,6 +10,7 @@
   ],
   "ingredient1count": 3,
   "ingredient2count": 3,
+  "ingredient3count": 0,
   "output": {
     "item": "minecraft:netherite_ingot"
   },

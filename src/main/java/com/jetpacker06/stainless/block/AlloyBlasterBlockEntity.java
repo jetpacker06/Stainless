@@ -1,13 +1,11 @@
 package com.jetpacker06.stainless.block;
 
-import com.jetpacker06.stainless.item.StainlessItems;
 import com.jetpacker06.stainless.recipe.AlloyBlasterRecipe;
 import com.jetpacker06.stainless.screen.AlloyBlasterMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
@@ -17,14 +15,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.crafting.conditions.TrueCondition;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -36,7 +32,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(4) {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -153,7 +149,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
             pBlockEntity.fuelTime--;
         }
 
-        if(hasRecipe(pBlockEntity)) {
+        if(hasThreeIngredientRecipe(pBlockEntity)) {
             if(hasFuelInFuelSlot(pBlockEntity) && !isConsumingFuel(pBlockEntity)) {
                 pBlockEntity.consumeFuel();
                 setChanged(pLevel, pPos, pState);
@@ -162,7 +158,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
                 pBlockEntity.progress++;
                 setChanged(pLevel, pPos, pState);
                 if(pBlockEntity.progress > pBlockEntity.maxProgress) {
-                    craftItem(pBlockEntity);
+                    craftTripleRecipe(pBlockEntity);
                 }
             }
         } else {
@@ -179,29 +175,58 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
         return entity.fuelTime > 0;
     }
 
-    private static boolean hasRecipe(AlloyBlasterBlockEntity entity) {
+    private static boolean hasThreeIngredientRecipe(AlloyBlasterBlockEntity entity) {
         Level level = entity.level;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
-        for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
-            inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
-        }
+        inventory.setItem(0, entity.itemHandler.getStackInSlot(0));
+        inventory.setItem(1, entity.itemHandler.getStackInSlot(1));
+        inventory.setItem(2, entity.itemHandler.getStackInSlot(2));
+        inventory.setItem(3, entity.itemHandler.getStackInSlot(3));
+        inventory.setItem(4, entity.itemHandler.getStackInSlot(4));
 
         Optional<AlloyBlasterRecipe> match = level.getRecipeManager()
                 .getRecipeFor(AlloyBlasterRecipe.Type.INSTANCE, inventory, level);
         return
                 match.isPresent() //is there even a recipe at all?
                 &&
-                inventory.getItem(3).getMaxStackSize() >= inventory.getItem(3).getCount() + match.get().getOutputCount() //can the amount of the item fit?
+                inventory.getItem(4).getMaxStackSize() >= inventory.getItem(4).getCount() + match.get().getOutputCount() //can the amount of the item fit?
                 &&
-                (inventory.getItem(3).getItem() == match.get().getResultItem().getItem() || inventory.getItem(3).isEmpty()) // does the result item match the item sitting in the output? OR is the output empty?
+                (inventory.getItem(4).getItem() == match.get().getResultItem().getItem() || inventory.getItem(4).isEmpty()) // does the result item match the item sitting in the output? OR is the output empty?
                 &&
                 entity.itemHandler.getStackInSlot(1).getCount() >= match.get().getIng1count() // does slot 1 contain enough items?
                 &&
                 entity.itemHandler.getStackInSlot(2).getCount() >= match.get().getIng2count() // does slot 2 contain enough items?
+                &&
+                entity.itemHandler.getStackInSlot(3).getCount() >= match.get().getIng3count() // does slot 3 contain enough items?
+                ;
+    }
+    private static boolean hasTwoIngredientRecipe(AlloyBlasterBlockEntity entity) {
+        Level level = entity.level;
+        SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+        inventory.setItem(0, entity.itemHandler.getStackInSlot(0));
+        inventory.setItem(1, entity.itemHandler.getStackInSlot(1));
+        inventory.setItem(2, entity.itemHandler.getStackInSlot(2));
+        inventory.setItem(3, entity.itemHandler.getStackInSlot(3));
+        inventory.setItem(4, entity.itemHandler.getStackInSlot(4));
+
+        Optional<AlloyBlasterRecipe> match = level.getRecipeManager()
+                .getRecipeFor(AlloyBlasterRecipe.Type.INSTANCE, inventory, level);
+        return
+                match.isPresent() //is there even a recipe at all?
+                        &&
+                        inventory.getItem(4).getMaxStackSize() >= inventory.getItem(4).getCount() + match.get().getOutputCount() //can the amount of the item fit?
+                        &&
+                        (inventory.getItem(4).getItem() == match.get().getResultItem().getItem() || inventory.getItem(4).isEmpty()) // does the result item match the item sitting in the output? OR is the output empty?
+                        &&
+                        entity.itemHandler.getStackInSlot(1).getCount() >= match.get().getIng1count() // does slot 1 contain enough items?
+                        &&
+                        entity.itemHandler.getStackInSlot(2).getCount() >= match.get().getIng2count() // does slot 2 contain enough items?
+                        &&
+                        entity.itemHandler.getStackInSlot(3).getCount() >= match.get().getIng3count() // does slot 3 contain enough items?
                 ;
     }
 
-    private static void craftItem(AlloyBlasterBlockEntity entity) {
+    private static void craftTripleRecipe(AlloyBlasterBlockEntity entity) {
         Level level = entity.level;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
@@ -215,9 +240,9 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
            // if (entity.itemHandler.getStackInSlot(1).getCount() >= match.get().getIng1count() && entity.itemHandler.getStackInSlot(2).getCount() >= match.get().getIng2count()) {
                 entity.itemHandler.extractItem(1, match.get().getIng1count(), false);
                 entity.itemHandler.extractItem(2, match.get().getIng2count(), false);
-
-                entity.itemHandler.setStackInSlot(3, new ItemStack(match.get().getResultItem().getItem(),
-                        entity.itemHandler.getStackInSlot(3).getCount() + match.get().getOutputCount()));
+                entity.itemHandler.extractItem(3, match.get().getIng3count(), false);
+                entity.itemHandler.setStackInSlot(4, new ItemStack(match.get().getResultItem().getItem(),
+                        entity.itemHandler.getStackInSlot(4).getCount() + match.get().getOutputCount()));
 
                 entity.resetProgress();
          //   }

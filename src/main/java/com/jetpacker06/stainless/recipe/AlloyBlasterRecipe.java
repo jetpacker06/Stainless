@@ -21,19 +21,19 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
     private final NonNullList<Ingredient> recipeItems;
     private final int ing1count;
     private final int ing2count;
-    //private final int ing3count;
+    private final int ing3count;
 
 
 
     public AlloyBlasterRecipe(ResourceLocation id, ItemStack output, int outputCount,
-                              NonNullList<Ingredient> recipeItems, int ing1count, int ing2count/*, int ing3count*/) {
+                              NonNullList<Ingredient> recipeItems, int ing1count, int ing2count, int ing3count) {
         this.id = id;
         this.output = output;
         this.outputCount = outputCount;
         this.recipeItems = recipeItems;
         this.ing1count =  ing1count;
         this.ing2count =  ing2count;
-        //this.ing3count =  ing3count;
+        this.ing3count =  ing3count;
     }
     @Override
     public boolean matches(SimpleContainer pContainer, net.minecraft.world.level.Level pLevel) {
@@ -67,9 +67,9 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
     public int getIng2count() {
         return ing2count;
     }
-    //public int getIng3count() {
-    //    return ing3count;
-    //}
+    public int getIng3count() {
+        return ing3count;
+    }
     @Override
     public ResourceLocation getId() {
         return id;
@@ -97,52 +97,42 @@ public class AlloyBlasterRecipe implements Recipe<SimpleContainer> {
         @Override
         public AlloyBlasterRecipe fromJson(ResourceLocation id, JsonObject json) {
             JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY);
-            for (int i = 0; i < ingredients.size();i++) {
+            NonNullList<Ingredient> inputs = NonNullList.withSize(3, Ingredient.EMPTY);
+            for (int i = 0;i<ingredients.size();i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
             int ing1count = GsonHelper.getAsInt(json, "ingredient1count");
             int ing2count = GsonHelper.getAsInt(json, "ingredient2count");
-            //int ing3count = GsonHelper.getAsInt(json, "ingredient3count");
-            //inputs.set(2, Ingredient.fromJson(ingredients.get(2)));
+            int ing3count = GsonHelper.getAsInt(json, "ingredient3count");
             int outputCount = GsonHelper.getAsInt(json, "outputcount");
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
 
-            return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count/*, ing3count*/);
+            return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count, ing3count);
         }
 
         @Override
         public AlloyBlasterRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(buf));
-            }
+            NonNullList<Ingredient> inputs = NonNullList.withSize(3, Ingredient.EMPTY);
+
+            inputs.set(0, Ingredient.fromNetwork(buf));
+            inputs.set(1, Ingredient.fromNetwork(buf));
+            inputs.set(2, Ingredient.fromNetwork(buf));
             int ing1count = buf.readInt();
-            //if (inputs.size() > 1) {
-                int ing2count = buf.readInt();
-            //}
-            if (inputs.size() > 2) {
-                int ing3count = buf.readInt();
-            }
+            int ing2count = buf.readInt();
+            int ing3count = buf.readInt();
             ItemStack output = buf.readItem();
             int outputCount = buf.readInt();
-            return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count/*, ing3count*/);
+            return new AlloyBlasterRecipe(id, output, outputCount, inputs, ing1count, ing2count, ing3count);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, AlloyBlasterRecipe recipe) {
-            buf.writeInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);
             }
             buf.writeInt(recipe.getIng1count());
-            if (recipe.getIngredients().size() > 1) {
-                buf.writeInt(recipe.getIng2count());
-            }
-            if (recipe.getIngredients().size() > 2) {
-                //buf.writeInt(recipe.getIng3count());
-            }
-            //buf.writeInt(recipe.getIng3count());
+            buf.writeInt(recipe.getIng2count());
+            buf.writeInt(recipe.getIng3count());
             buf.writeItemStack(recipe.getResultItem(), false);
             buf.writeInt(recipe.getOutputCount());
         }

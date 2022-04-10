@@ -10,6 +10,7 @@
   ],
   "ingredient1count": 1,
   "ingredient2count": 1,
+  "ingredient3count": 0,
   "output": {
     "item": "stainless:steel_ingot"
   },
