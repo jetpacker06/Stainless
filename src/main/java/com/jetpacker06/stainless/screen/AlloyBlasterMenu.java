@@ -34,9 +34,10 @@ public class AlloyBlasterMenu extends AbstractContainerMenu {
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
             this.addSlot(new ModFuelSlot(handler, 0, 18, 50));
-            this.addSlot(new SlotItemHandler(handler, 1, 66, 16));
-            this.addSlot(new SlotItemHandler(handler, 2, 66, 50));
-            this.addSlot(new ModResultSlot(handler, 3, 114, 33));
+            this.addSlot(new SlotItemHandler(handler, 1, 66, 11));
+            this.addSlot(new SlotItemHandler(handler, 2, 66, 33));
+            this.addSlot(new SlotItemHandler(handler, 3, 66, 55));
+            this.addSlot(new ModResultSlot(handler, 4, 114, 33));
         });
         addDataSlots(data);
     }
@@ -81,7 +82,7 @@ public class AlloyBlasterMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 4;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 5;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
