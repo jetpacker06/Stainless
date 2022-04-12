@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "particle": "stainless:block/steel_block",
-    "north": "stainless:block/ab_front",
+    "north": "stainless:block/ab_front_lit",
     "south": "stainless:block/ab_left_right_back",
     "east": "stainless:block/ab_left_right_back",
     "west": "stainless:block/ab_left_right_back",

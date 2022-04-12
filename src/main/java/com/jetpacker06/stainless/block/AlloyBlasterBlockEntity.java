@@ -19,17 +19,22 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
+
+import static com.jetpacker06.stainless.block.AlloyBlasterBlock.LIT;
 
 public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(5) {
@@ -135,7 +140,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-
+    private static final Logger LOGGER = LogManager.getLogger();
     private void consumeFuel() {
         if(!itemHandler.getStackInSlot(0).isEmpty()) {
             this.fuelTime = ForgeHooks.getBurnTime(this.itemHandler.extractItem(0, 1, false),
@@ -143,13 +148,21 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
             this.maxFuelTime = this.fuelTime;
         }
     }
-
+    private boolean isLit() {
+        return this.fuelTime > 0;
+    }
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, AlloyBlasterBlockEntity pBlockEntity) {
         if(isConsumingFuel(pBlockEntity)) {
+            pState = pState.setValue(LIT, true);
+            pLevel.setBlock(pPos, pState, 3);
             pBlockEntity.fuelTime--;
         }
+        else {
+            pState = pState.setValue(LIT, false);
+            pLevel.setBlock(pPos, pState, 3);
+        }
 
-        if(hasThreeIngredientRecipe(pBlockEntity)) {
+        if(hasRecipe(pBlockEntity)) {
             if(hasFuelInFuelSlot(pBlockEntity) && !isConsumingFuel(pBlockEntity)) {
                 pBlockEntity.consumeFuel();
                 setChanged(pLevel, pPos, pState);
@@ -158,13 +171,14 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
                 pBlockEntity.progress++;
                 setChanged(pLevel, pPos, pState);
                 if(pBlockEntity.progress > pBlockEntity.maxProgress) {
-                    craftTripleRecipe(pBlockEntity);
+                    doRecipe(pBlockEntity);
                 }
             }
         } else {
             pBlockEntity.resetProgress();
             setChanged(pLevel, pPos, pState);
         }
+
     }
 
     private static boolean hasFuelInFuelSlot(AlloyBlasterBlockEntity entity) {
@@ -175,7 +189,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
         return entity.fuelTime > 0;
     }
 
-    private static boolean hasThreeIngredientRecipe(AlloyBlasterBlockEntity entity) {
+    private static boolean hasRecipe(AlloyBlasterBlockEntity entity) {
         Level level = entity.level;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         inventory.setItem(0, entity.itemHandler.getStackInSlot(0));
@@ -226,7 +240,7 @@ public class AlloyBlasterBlockEntity extends BlockEntity implements MenuProvider
                 ;
     }
 
-    private static void craftTripleRecipe(AlloyBlasterBlockEntity entity) {
+    private static void doRecipe(AlloyBlasterBlockEntity entity) {
         Level level = entity.level;
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
