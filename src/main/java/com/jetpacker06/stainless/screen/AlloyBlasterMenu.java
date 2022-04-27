@@ -1,7 +1,7 @@
 package com.jetpacker06.stainless.screen;
 
 import com.jetpacker06.stainless.block.AlloyBlasterBlockEntity;
-import com.jetpacker06.stainless.block.StainlessBlocks;
+import com.jetpacker06.stainless.block.AllBlocks;
 import com.jetpacker06.stainless.screen.slot.ModFuelSlot;
 import com.jetpacker06.stainless.screen.slot.ModResultSlot;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.lwjgl.system.CallbackI;
 
 public class AlloyBlasterMenu extends AbstractContainerMenu {
     private final AlloyBlasterBlockEntity blockEntity;
@@ -120,7 +119,7 @@ public class AlloyBlasterMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, StainlessBlocks.ALLOY_BLASTER.get());
+                pPlayer, AllBlocks.ALLOY_BLASTER.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

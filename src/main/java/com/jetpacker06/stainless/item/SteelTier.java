@@ -7,5 +7,5 @@ import net.minecraftforge.common.ForgeTier;
 public class SteelTier {
     public static final ForgeTier STEEL = new ForgeTier(
             2, 400, 7.0f, 2.5f, 14,
-            BlockTags.NEEDS_IRON_TOOL, () -> Ingredient.of(StainlessItems.STEEL_INGOT.get()));
+            BlockTags.NEEDS_IRON_TOOL, () -> Ingredient.of(AllItems.STEEL_INGOT.get()));
 }

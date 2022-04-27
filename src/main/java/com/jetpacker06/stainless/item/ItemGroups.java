@@ -7,7 +7,7 @@ public class ItemGroups {
     public static final CreativeModeTab STAINLESS = new CreativeModeTab("Stainless Items") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(StainlessItems.STEEL_INGOT.get());
+            return new ItemStack(AllItems.STEEL_INGOT.get());
         }
     };
 }

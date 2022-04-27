@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class StainlessItems {
+public class AllItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Stainless.MOD_ID);
     //begin items
     public static final RegistryObject<Item> STEEL_INGOT = ITEMS.register("steel_ingot", () -> new SteelIngotItem(new Item.Properties().tab(ItemGroups.STAINLESS)));

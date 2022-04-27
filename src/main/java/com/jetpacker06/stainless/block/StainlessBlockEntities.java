@@ -13,6 +13,6 @@ public class StainlessBlockEntities {
     public static final RegistryObject<BlockEntityType<AlloyBlasterBlockEntity>> ALLOY_BLASTER =
             BLOCK_ENTITIES.register("alloy_blaster", () ->
             BlockEntityType.Builder.of(AlloyBlasterBlockEntity::new,
-                    StainlessBlocks.ALLOY_BLASTER.get()).build(null));
+                    AllBlocks.ALLOY_BLASTER.get()).build(null));
     public static void register(IEventBus eventBus) {BLOCK_ENTITIES.register(eventBus);}
 }
