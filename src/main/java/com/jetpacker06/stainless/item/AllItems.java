@@ -18,6 +18,7 @@ public class AllItems {
     public static final RegistryObject<Item> STEEL_PICKAXE = ITEMS.register("steel_pickaxe", () -> (new PickaxeItem(SteelTier.STEEL, 1, -2.8F, new Item.Properties().tab(ItemGroups.STAINLESS))));
     public static final RegistryObject<Item> STEEL_HOE = ITEMS.register("steel_hoe", () -> (new HoeItem(SteelTier.STEEL, -2, -.5f, new Item.Properties().tab(ItemGroups.STAINLESS))));
     public static final RegistryObject<Item> STEEL_SHOVEL = ITEMS.register("steel_shovel", () -> (new ShovelItem(SteelTier.STEEL, 1.5f, -3f, new Item.Properties().tab(ItemGroups.STAINLESS))));
+    public static final RegistryObject<Item> STEEL_SHEET = ITEMS.register("steel_sheet", () -> new Item(new Item.Properties().tab(ItemGroups.STAINLESS)));
     //end items
     public static void register(IEventBus eventBus) {ITEMS.register(eventBus);}
 }
