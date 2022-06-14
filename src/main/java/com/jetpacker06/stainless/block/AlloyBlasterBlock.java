@@ -92,6 +92,7 @@ public class AlloyBlasterBlock extends BaseEntityBlock implements EntityBlock{
             if (blockEntity instanceof AlloyBlasterBlockEntity) {
                 ((AlloyBlasterBlockEntity) blockEntity).drops();
             }
+            blockEntity.setRemoved();
         }
     }
 
