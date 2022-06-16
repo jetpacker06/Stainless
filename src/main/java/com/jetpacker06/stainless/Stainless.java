@@ -7,6 +7,8 @@ import com.jetpacker06.stainless.recipe.RecipeTypes;
 import com.jetpacker06.stainless.screen.AlloyBlasterScreen;
 import com.jetpacker06.stainless.screen.MenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -32,5 +34,6 @@ public class Stainless {
     }
     private void clientSetup(final FMLCommonSetupEvent event) {
         MenuScreens.register(MenuTypes.ALLOY_BLASTER_MENU.get(), AlloyBlasterScreen::new);
+        ItemBlockRenderTypes.setRenderLayer(AllBlocks.DOUBLOON_PILE.get(), RenderType.cutout());
     }
 }

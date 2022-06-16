@@ -17,6 +17,6 @@ public class SteelIngotItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("steel_ingot_tooltip"));
+
     }
 }
