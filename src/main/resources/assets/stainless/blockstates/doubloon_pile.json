@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "stainless:block/doubloon_pile"
+    },
+    "facing=east": {
+      "model": "stainless:block/doubloon_pile",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "stainless:block/doubloon_pile",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "stainless:block/doubloon_pile",
+      "y": 270
     }
   }
 }

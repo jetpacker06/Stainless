@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +33,7 @@ public class Stainless {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
     }
-    private void clientSetup(final FMLCommonSetupEvent event) {
+    private void clientSetup(final FMLClientSetupEvent event) {
         MenuScreens.register(MenuTypes.ALLOY_BLASTER_MENU.get(), AlloyBlasterScreen::new);
         ItemBlockRenderTypes.setRenderLayer(AllBlocks.DOUBLOON_PILE.get(), RenderType.cutout());
     }

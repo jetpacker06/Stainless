@@ -24,7 +24,7 @@ public class AllBlocks {
 
     public static final RegistryObject<Block>
         STEEL_BLOCK = metal_block("steel_block"),
-        DOUBLOON_PILE = registerBlock("doubloon_pile", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(5f, 6f)), CreativeModeTab.TAB_MISC),
+        DOUBLOON_PILE = registerBlock("doubloon_pile", () -> new DoubloonPileBlock(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(5f, 6f)), CreativeModeTab.TAB_MISC),
         ALLOY_BLASTER = registerBlock("alloy_blaster", () -> new AlloyBlasterBlock(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(6).explosionResistance(9).requiresCorrectToolForDrops()), ItemGroups.STAINLESS);
 
     //end blocks
